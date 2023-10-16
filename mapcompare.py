@@ -215,6 +215,7 @@ class MapCompare:
         if (debug_mode):
             exit()
         print(flush=True)
+        return(len(rootlocations1),len(rootlocations2))
 
     def compute_results(self, eval_file_name):
         counter = {
@@ -1328,11 +1329,17 @@ def mapcompare(data_path,dataset,solution,compute_mode,year):
 
     df = pd.DataFrame({})
 
-    for i in [0.0001,0.001,0.01,0.1]: #
+    # first try
+    # for i in [0.0001,0.001,0.01,0.1]: #
+    #     for b in [30]:#,45
+    #         for t in [0.0001,0.001,0.01,0.1]:#
+    #             for c in ['knn']:#,'wmm'
+    
+    # second try
+    for i in [0.0001,0.001,0.01]: #
         for b in [30]:#,45
-            for t in [0.0001,0.001,0.01,0.1]:#
-                for c in ['knn']:#,'wmm'
-                    
+            for t in [i*10]:#
+                for c in ['knn']:#,'wmm'     
                     global breadcrumb_interval
                     global bearing_limit
                     global match_distance_threshold
@@ -1384,17 +1391,18 @@ def mapcompare(data_path,dataset,solution,compute_mode,year):
                                                         "(Y/n) ".format(solution, dataset)).lower() == "y":
                                 root_locations = f_results.format(file=solution + "_rootlocations")
                                 if os.path.isfile(root_locations):
-                                    m.compare_maps(f_results.format(file=solution + "_" + compare_mode + "{t:.0f}".format(t=match_distance_threshold)),
+                                    [rootloc1, rootloc2] = m.compare_maps(f_results.format(file=solution + "_" + compare_mode + "{t:.0f}".format(t=match_distance_threshold)),
                                                 root_locations)
                                 else:
+                                    rootloc1, rootloc2 = 0, 0
                                     print("Tried to compare maps without root location file", file=sys.stderr, flush=True)
                         else:
                             print("Tried to compare {}ground truth against {}solution\n".format('' if has_ground_truth else 'a missing ', '' if has_solution else 'a missing '), file=sys.stderr, flush=True)
                     if "r" in compute_mode.lower():
                         [MG,NH,KM,pre,rec,f1s]=m.compute_results(f_results.format(file=solution + "_" + compare_mode + "{t:.0f}".format(t=match_distance_threshold)))
-                        df_tmp = pd.DataFrame({'i':[breadcrumb_interval],'b':[bearing_limit],'t':[match_distance_threshold],'c':[compare_mode],'MG':[MG],'NH':[NH],'KM':[KM],'pre':[pre],'rec':[rec],'f1s':[f1s]})
+                        df_tmp = pd.DataFrame({'i':[breadcrumb_interval],'b':[bearing_limit],'t':[match_distance_threshold], \
+                                               'c':[compare_mode],'MG':[MG],'root_loc1':[rootloc1],'root_loc2':[rootloc2],'NH':[NH],'KM':[KM],'pre':[pre],'rec':[rec],'f1s':[f1s]})
                         df = pd.concat([df,df_tmp])
-
 
     print("[MapCompare] Operations completed in {sec:.0f} seconds.\n".format(sec=time.time() - start_time))
     df.to_csv('../output/'+dataset+'_'+str(year)+'.csv', index=False)
