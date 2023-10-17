@@ -1,0 +1,23 @@
+{
+  "dataset": {
+    "dataset_name": "test_rn_pred_full_lingqiuxian",
+    "min_lat": 39.04478604850142,
+    "min_lng": 113.8897705078125,
+    "max_lat": 39.66068502219228,
+    "max_lng": 114.5709228515625, 
+    "nb_rows": 18432,
+    "nb_cols": 15744
+  },
+  "feature_extraction": {
+    "tile_pixel_size": 128,
+    "test_tile_row_min": 0,
+    "test_tile_row_max": 144,
+    "test_tile_col_min": 0,
+    "test_tile_col_max": 123
+  },
+  "topology_construction": {
+    "link_radius": 50,
+    "alpha": 1.4,
+    "min_supp": 5
+  }
+}
