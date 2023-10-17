@@ -1338,7 +1338,7 @@ def mapcompare(data_path,dataset,solution,compute_mode,year):
     # second try
     for i in [0.0001,0.001,0.01]: #
         for b in [30]:#,45
-            for t in [i*10]:#
+            for t in [i*10, i*5]:#
                 for c in ['knn']:#,'wmm'     
                     global breadcrumb_interval
                     global bearing_limit
