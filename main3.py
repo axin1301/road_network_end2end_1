@@ -25,10 +25,18 @@ def main():
             for county in ['xixiangxian','shufuxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
 
                 if year ==2017 and county in ['xixiangxian','shufuxian','guanghexian','danfengxian', \
-                                              'jiangzixian','honghexian','liboxian']:
+                                              'jiangzixian','honghexian','liboxian','linquanxian','jingyuxian']:
                     continue
 
-                elif year ==2017 and county in ['linquanxian']:
+                elif year ==2017 and county in ['lingqiuxian']:
+                    transform_graph_main(year,county)
+                    now_time = datetime.datetime.now()
+                    log_f.write(county+ '   ' +str(year) + '  '+'transform_graph_main'+ '  '+str(now_time))
+                    log_f.write('\n')
+                    shp2txt_transform(year,county)
+                    now_time = datetime.datetime.now()
+                    log_f.write(county+'   ' +str(year) +'  '+'shp2txt_transform'+ '  '+str(now_time))
+                    log_f.write('\n')
                     mapcompare('../temp_output/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year)
                     now_time = datetime.datetime.now()
                     log_f.write(county+'   ' +str(year) +'  '+'mapcompare'+ '  '+str(now_time))
