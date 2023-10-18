@@ -1351,6 +1351,10 @@ def mapcompare(data_path,dataset,solution,compute_mode,year):
                     compare_mode = c
 
                     force_computation = True
+
+                    if dataset in ['linquanxian'] and i == 0.0001:
+                        continue
+
                     start_time = time.time()
                     # data_path = sys.argv[1].strip("/\\")
                     # dataset = sys.argv[2]
