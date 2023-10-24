@@ -25,43 +25,37 @@ def main():
     print("Hello World")
     #test()
     
-    var1 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/lipingxian_2021/groundtruth/lipingxian_2021_edges_osm.txt'))
-    var2 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/congjiangxian_2021/groundtruth/congjiangxian_2021_edges_osm.txt'))
-    while (var1+var2)!=2:
-        time.sleep(2000)
-        var1 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/lipingxian_2021/groundtruth/lipingxian_2021_edges_osm.txt'))
-        var2 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/congjiangxian_2021/groundtruth/congjiangxian_2021_edges_osm.txt'))
+    # var1 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/lipingxian_2021/groundtruth/lipingxian_2021_edges_osm.txt'))
+    # var2 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/congjiangxian_2021/groundtruth/congjiangxian_2021_edges_osm.txt'))
+    # while (var1+var2)!=2:
+    #     time.sleep(2000)
+    #     var1 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/lipingxian_2021/groundtruth/lipingxian_2021_edges_osm.txt'))
+    #     var2 = int(os.path.exists('../temp_output/GraphSamplingToolkit-main/congjiangxian_2021/groundtruth/congjiangxian_2021_edges_osm.txt'))
 
-        if (var1+var2)==2:
-            break
+    #     if (var1+var2)==2:
+    #         break
+    
+    df_all1 = pd.DataFrame({})
+    df_all2 = pd.DataFrame({})
+    df_all1.to_csv('validation_statistics_all_last10cts_baseline1.csv', index=False)
+    df_all2.to_csv('validation_statistics_all_last10cts_baseline2.csv', index=False)
 
-    for year in [2017,2021]:
-        for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
+    for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
+        for year in [2017,2021]:
             mapcompare_baseline1('../temp_output_b1/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'baseline1')
-
-    df_all = pd.DataFrame({})
-    for year in [2017,2021]:
-        for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
-            df = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline1.csv')
-            df_all = pd.concat([df_all, df])
-
-    df_all.to_csv('validation_statistics_all_last_10cts_baseline1.csv', index=False)
-
-
-    for year in [2017,2021]:
-        for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
             mapcompare_baseline1('../temp_output_b2/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'baseline2')
 
-    df_all = pd.DataFrame({})
-    for year in [2017,2021]:
-        for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
-            df = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline2.csv')
-            df_all = pd.concat([df_all, df])
+            df_all1 = pd.read_csv('validation_statistics_all_last10cts_baseline1.csv')
+            df_all2 = pd.read_csv('validation_statistics_all_last10cts_baseline2.csv')
 
-    df_all.to_csv('validation_statistics_all_last_10cts_baseline2.csv', index=False)
+            df1 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline1.csv')
+            df2 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline2.csv')
 
+            df_all1 = pd.concat([df_all1, df1])
+            df_all2 = pd.concat([df_all2, df2])
 
-
+            df_all1.to_csv('validation_statistics_all_last10cts_baseline1.csv', index=False)
+            df_all2.to_csv('validation_statistics_all_last10cts_baseline2.csv', index=False)
 
 
 

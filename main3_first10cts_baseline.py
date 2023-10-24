@@ -22,44 +22,29 @@ import datetime
 def main():
     print("Hello World")
     #test()
-    with open("time_log_first10cts_base.txt","w") as log_f:
-        for year in [2017,2021]:
-            for county in ['xixiangxian','shufuxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
-                mapcompare_baseline1('../temp_output_b1/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year, 'baseline1')
+    df_all1 = pd.DataFrame({})
+    df_all2 = pd.DataFrame({})
+    df_all1.to_csv('validation_statistics_all_first10cts_baseline1.csv', index=False)
+    df_all2.to_csv('validation_statistics_all_first10cts_baseline2.csv', index=False)
 
+    # with open("time_log_first10cts_base.txt","w") as log_f:
+    for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+        for year in [2017,2021]: 
+            mapcompare_baseline1('../temp_output_b1/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year, 'baseline1')
+            mapcompare_baseline1('../temp_output_b2/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year, 'baseline2')
 
+            df_all1 = pd.read_csv('validation_statistics_all_first10cts_baseline1.csv')
+            df_all2 = pd.read_csv('validation_statistics_all_first10cts_baseline2.csv')
 
-        df_all = pd.DataFrame({})
-        for year in [2017,2021]:
-            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
-                df = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline1.csv')
-                df_all = pd.concat([df_all, df])
-                # now_time = datetime.datetime.now()
-                # log_f.write(county +  '   ' +str(year) +'  '+'validation_statistics_all'+ '  '+str(now_time))
-                # log_f.write('\n')
+            df1 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline1.csv')
+            df2 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline2.csv')
 
-        df_all.to_csv('validation_statistics_all_first10cts_baseline1.csv', index=False)
+            df_all1 = pd.concat([df_all1, df1])
+            df_all2 = pd.concat([df_all2, df2])
 
+            df_all1.to_csv('validation_statistics_all_first10cts_baseline1.csv', index=False)
+            df_all2.to_csv('validation_statistics_all_first10cts_baseline2.csv', index=False)
 
-        for year in [2017,2021]:
-            for county in ['xixiangxian','shufuxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
-                mapcompare_baseline1('../temp_output_b2/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year, 'baseline2')
-
-
-
-        df_all = pd.DataFrame({})
-        for year in [2017,2021]:
-            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
-                df = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline2.csv')
-                df_all = pd.concat([df_all, df])
-                # now_time = datetime.datetime.now()
-                # log_f.write(county +  '   ' +str(year) +'  '+'validation_statistics_all'+ '  '+str(now_time))
-                # log_f.write('\n')
-
-        df_all.to_csv('validation_statistics_all_first10cts_baseline2.csv', index=False)
-
-
- 
 
 if __name__=="__main__":
     main()
