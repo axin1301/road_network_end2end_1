@@ -37,11 +37,26 @@ def main():
     
     df_all1 = pd.DataFrame({})
     df_all2 = pd.DataFrame({})
+
+    year = 2017 
+    county = 'debaoxian'
+
+    df1 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline1.csv')
+    df2 = pd.read_csv('../output/'+county+'_'+str(year)+'_baseline2.csv')
+
+    df_all1 = pd.concat([df_all1, df1])
+    df_all2 = pd.concat([df_all2, df2])
+
     df_all1.to_csv('validation_statistics_all_last10cts_baseline1.csv', index=False)
     df_all2.to_csv('validation_statistics_all_last10cts_baseline2.csv', index=False)
 
     for county in ['debaoxian','zhuoluxian','shangyixian','songxian','sinanxian','tongjiangxian','lipingxian','mingshuixian','xijixian','congjiangxian']:
         for year in [2017,2021]:
+            if year == 2017 and county == 'debaoxian':
+                continue
+
+            print('working correctly')
+
             mapcompare_baseline1('../temp_output_b1/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'baseline1')
             mapcompare_baseline1('../temp_output_b2/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'baseline2')
 
@@ -56,6 +71,8 @@ def main():
 
             df_all1.to_csv('validation_statistics_all_last10cts_baseline1.csv', index=False)
             df_all2.to_csv('validation_statistics_all_last10cts_baseline2.csv', index=False)
+
+            print('working correctly2')
 
 
 
