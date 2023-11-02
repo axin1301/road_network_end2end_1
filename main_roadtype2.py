@@ -6,7 +6,7 @@ from concat_all_label_image_roadtype import *
 from GT_post_processing_roadtype import *
 from shp2txt_transform_roadtype import *
 from mapcompare_roadtype import *
-
+from mapcompare_roadtype_OSM import *
 sys.path.append('topology_construction') 
 from topology_construction.transform_graph_main_roadtype import *
 
@@ -53,7 +53,7 @@ def main():
                 log_f.write(county+'   ' +str(year) +'  '+'d500_mapcompare'+ '  '+str(now_time))
                 log_f.write('\n')
 
-                mapcompare_roadtype('../temp_output_OSM/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'OSM')
+                mapcompare_roadtype_OSM('../temp_output_OSM/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'OSM')
                 now_time = datetime.datetime.now()
                 log_f.write(county+'   ' +str(year) +'  '+'OSM_mapcompare'+ '  '+str(now_time))
                 log_f.write('\n')
