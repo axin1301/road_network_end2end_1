@@ -1374,7 +1374,7 @@ def mapcompare_roadtype(data_path,dataset,solution,compute_mode,year,token):
                         f_data = "{folder}/{dataset}_{year}".format(folder=data_path, dataset=dataset, year = year)
                         # f_data = data_path + '/' + dataset + str(roadclass)+'_'+str(year)
 
-                        f_data2 = f_data + '/../../temp_output_roadtype/GraphSamplingToolkit-main/'+ dataset +'_' + str(roadclass)+'_'+str(year)
+                        f_data2 = f_data + '/../../../temp_output_roadtype/GraphSamplingToolkit-main/'+ dataset +'_' + str(roadclass)+'_'+str(year)
                         # "{dataset}_{year}".format(dataset=dataset, year = year) ##original GT
 
                         f_ground_truth = "{folder}/groundtruth/{dataset}_{year}_{{type}}.txt".format(folder=f_data2, dataset=dataset, year = year)
@@ -1414,7 +1414,7 @@ def mapcompare_roadtype(data_path,dataset,solution,compute_mode,year,token):
                         if "r" in compute_mode.lower():
                             [MG,NH,KM,pre,rec,f1s]=m.compute_results(f_results.format(file=solution + "_" + compare_mode + "{t:.0f}".format(t=match_distance_threshold)))
                             df_tmp = pd.DataFrame({'i':[breadcrumb_interval],'b':[bearing_limit],'t':[match_distance_threshold], \
-                                                'c':[compare_mode],'MG':[MG],'root_loc1':[rootloc1],'root_loc2':[rootloc2],'NH':[NH],'KM':[KM],'county':[dataset],'roadclass':[roadclass],'pre':[pre],'rec':[rec],'f1s':[f1s]})
+                                                'c':[compare_mode],'MG':[MG],'root_loc1':[rootloc1],'root_loc2':[rootloc2],'NH':[NH],'KM':[KM],'year':[year],'county':[dataset],'roadclass':[roadclass],'pre':[pre],'rec':[rec],'f1s':[f1s]})
                             df = pd.concat([df,df_tmp])
 
     print("[MapCompare] Operations completed in {sec:.0f} seconds.\n".format(sec=time.time() - start_time))

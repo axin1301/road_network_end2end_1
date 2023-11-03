@@ -53,7 +53,7 @@ def main():
                 log_f.write(county+'   ' +str(year) +'  '+'d500_mapcompare'+ '  '+str(now_time))
                 log_f.write('\n')
 
-                mapcompare_roadtype_OSM('../temp_output_OSM/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year,'OSM')
+                mapcompare_roadtype_OSM('../temp_output_OSM/GraphSamplingToolkit-main',county, 'xyx', 'LCR', year+1,'OSM')
                 now_time = datetime.datetime.now()
                 log_f.write(county+'   ' +str(year) +'  '+'OSM_mapcompare'+ '  '+str(now_time))
                 log_f.write('\n')
