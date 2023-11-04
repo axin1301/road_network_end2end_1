@@ -22,8 +22,8 @@ def main():
     print("Hello World")
     #test()
     with open("time_log_roadtype2.txt","w") as log_f:
-        for year in [2017,2021]:
-            for county in ['honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+        for year in [2021]: #2017,
+            for county in ['honghexian','liboxian','linquanxian','jingyuxian']:#,'lingqiuxian']:
                 now_time = datetime.datetime.now()
                 log_f.write(county + '   ' +str(year) + '  ' +str(now_time))
                 log_f.write('\n')
@@ -67,6 +67,11 @@ def main():
                 now_time = datetime.datetime.now()
                 log_f.write(county+'   ' +str(year) +'  '+'b2_mapcompare'+ '  '+str(now_time))
                 log_f.write('\n')
+                print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                print(str(county),str(year),'done')
+                print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
                 for roadclass in [49,41000,42000,43000,44000,45000,47000,51000,52000,53000,54000]:
                     if not os.path.exists('../temp_output_roadtype/'+county+'_road_label_by_image_'+str(roadclass)+'_'+str(year)):
@@ -89,6 +94,35 @@ def main():
 
                     os.removedirs('../temp_output_roadtype/'+county+'_road_label_by_image_'+str(roadclass)+'_'+str(year))
                     os.removedirs('../temp_output_roadtype/'+county+'_width3_'+str(roadclass)+'_'+str(year))
+
+        
+        df_all = pd.DataFrame({})
+        for year in [2017,2021]:
+            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+                df = pd.read_csv('../output/'+county+'_'+str(year)+'_d500_recall.csv')
+                df_all = pd.concat([df_all, df])
+        df_all.to_csv('validation_statistics_first10_d500_recall.csv', index=False)
+
+        df_all = pd.DataFrame({})
+        for year in [2017,2021]:
+            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+                df = pd.read_csv('../output/'+county+'_'+str(year)+'_OSM_recall.csv')
+                df_all = pd.concat([df_all, df])
+        df_all.to_csv('validation_statistics_first10_OSM_recall.csv', index=False)
+
+        df_all = pd.DataFrame({})
+        for year in [2017,2021]:
+            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+                df = pd.read_csv('../output/'+county+'_'+str(year)+'_b1_recall.csv')
+                df_all = pd.concat([df_all, df])
+        df_all.to_csv('validation_statistics_first10_b1_recall.csv', index=False)
+
+        df_all = pd.DataFrame({})
+        for year in [2017,2021]:
+            for county in ['shufuxian','xixiangxian','guanghexian','danfengxian','jiangzixian','honghexian','liboxian','linquanxian','jingyuxian','lingqiuxian']:
+                df = pd.read_csv('../output/'+county+'_'+str(year)+'_b2_recall.csv')
+                df_all = pd.concat([df_all, df])
+        df_all.to_csv('validation_statistics_first10_b2_recall.csv', index=False)
 
 
 if __name__=="__main__":
