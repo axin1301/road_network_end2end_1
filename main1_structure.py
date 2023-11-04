@@ -145,6 +145,57 @@ district_list = ['xixiangxian','shufuxian','guanghexian','danfengxian','jiangzix
 # pd_dict = pd.DataFrame({'county':d_list,'year':y_list,'alpha':a_list,'beta':b_list,'gamma':c_list})
 # pd_dict.to_csv('statis/a_b_g_graph_feature_GT.csv', index=False)
 
+########################################################################################################################
+a_list = []
+b_list = []
+c_list = []
+y_list = []
+d_list = []
+edge_length_list = []
+node_length_list=[]
+
+alpha_list = []
+beta_list = []
+gamma_list = []
+
+for county in district_list:
+    for year in [2017,2021]:
+        print(county,year)
+        G = nx.read_gpickle('RN_graph/'+county+'_'+str(year)+'.gpickle')
+         # 获取图的所有连通分量
+        connected_components = list(nx.connected_components(G))
+
+        # 存储每个连通分量的特征路径长度
+        # 遍历每个连通分量并计算特征路径长度
+        # for comp in connected_components:
+        #     # 获取每个连通分量的子图
+        #     subgraph = G.subgraph(comp)
+        nodes_count = G.number_of_nodes()
+        edges_count = G.number_of_edges()
+        #     if nodes_count>3:
+        alpha = (edges_count - nodes_count +1)/(2*nodes_count-5)
+        beta = edges_count/nodes_count
+        gamma = edges_count/(3*(nodes_count-2))
+        alpha_list.append(alpha)
+        beta_list.append(beta)
+        gamma_list.append(gamma)
+
+        # if alpha_list and beta_list and gamma_list:
+        #     # 每个连通分量中心性指标的平均值
+        #     avg_alpha = sum(alpha_list) / len(alpha_list)
+        #     avg_beta = sum(beta_list) / len(beta_list)
+        #     avg_gamma = sum(gamma_list) / len(gamma_list)
+        
+        edge_length_list.append(edges_count)
+        node_length_list.append(nodes_count)
+        # a_list.append(avg_alpha)
+        # b_list.append(avg_beta)
+        # c_list.append(avg_gamma)
+        y_list.append(year)
+        d_list.append(county)
+
+pd_dict = pd.DataFrame({'county':d_list,'year':y_list,'alpha':alpha_list,'beta':beta_list,'gamma':gamma_list,'edge':edge_length_list,'node':node_length_list})
+pd_dict.to_csv('a_b_g_graph_feature_GT_whole.csv', index=False)
 # ##################################################################################################################################################
 
 # # 方法1：对采样节点计算平均最短路径长度
